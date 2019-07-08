@@ -1,0 +1,55 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+logger.quiet "4--------------------------------------------------rootProject的build.gradle按顺序执行(除buildscript)"
+buildscript {
+    logger.quiet "3==========rootProject的build.gradle中buildscript闭包首先执行，其余按顺序执行"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+subprojects {
+
+}
+
+//等价于settings.gradle中设置的监听
+gradle.projectsEvaluated {
+    logger.quiet "***************************************************类似于settings.gradle中设置的监听，按添加的顺序执行"
+}
+//1. gradle设置关于生命周期的监听都是全局的，因为每个project里的gradle对象都是同一个(对于这个项目来说gradle对象就是GradleLyfeCycleDemo)
+//2. 在此处设置beforeProject和在settings.gradle设置表现是不一样的(rootProject的beforeProject生命周期监听不到)，
+//   大概是因为执行到这里的时候，对于这个project来说，before这个阶段已经过了，但对于后面的配置的project来说，还是能完整监听到的，其他生命周期事件类似
+//3. 关于it，在groovy语法中，方法只有一个形参时，可以用it表示
+gradle.beforeProject {
+    logger.quiet "+++++++++++${it.displayName}---beforeProject"
+}
+
+gradle.afterProject {
+    logger.quiet "+++++++++++${it.displayName}---afterProject"
+}
+//类似于gradle.beforeProject,不同之处在于:beforeEvaluate只能在具体project下，beforeProject只能通过gradle统一配置
+beforeEvaluate {
+    logger.quiet "+++++++++++${it.displayName}---beforeEvaluate"
+}
+
+afterEvaluate {
+    logger.quiet "+++++++++++${it.displayName}---afterEvaluate"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

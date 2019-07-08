@@ -1,0 +1,9 @@
+//apk文件路径修改
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        //修改文件目录
+        variant.getPackageApplication().outputDirectory = new File("D:\\apk")
+        //修改文件名
+        outputFileName = "${new Date().format('yyyyMMdd_HH_mm')}_${variant.buildType.name}_hjx-s.apk"
+    }
+}

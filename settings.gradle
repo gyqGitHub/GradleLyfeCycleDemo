@@ -1,0 +1,36 @@
+//监听不到
+gradle.buildStarted {
+    logger.quiet "***************************************************${gradle}：开始构建啦！！！"
+}
+//根据include 方法传的值确定要构建的项目(除了rootProject)有哪些
+include ':app', ':base', ':javaLib', ':business'
+logger.quiet "1=========最先执行的文件setting.gradle"
+
+//监听settings.gradle中代码执行完
+gradle.settingsEvaluated {
+    logger.quiet "2=========setting.gradle配置完成"
+}
+
+gradle.projectsLoaded {
+    logger.quiet "***************************************************所有的project被加载完，开始配置每个project下的build.gradle"
+}
+
+gradle.projectsEvaluated {
+    logger.quiet "***************************************************所有的project配置(方法代码执行)完"
+}
+
+gradle.buildFinished {
+    logger.quiet "***************************************************${gradle}：构建结束啦！！！"
+}
+
+gradle.taskGraph.whenReady {
+    logger.quiet "***************************************************根据task间的依赖关系生成taskGraph依赖图谱,之后执行task时，按顺序执行各个任务"
+}
+
+gradle.taskGraph.beforeTask {
+    logger.quiet "==========${it.project}-->${it.name}执行前的回调"
+}
+
+gradle.taskGraph.afterTask {
+    logger.quiet "==========${it.project}-->${it.name}执行后的回调"
+}
