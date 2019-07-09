@@ -1,6 +1,7 @@
 logger.quiet "5==========project:app的build.gradle执行"
 apply plugin: 'com.android.application'
-apply from: 'utils.gradle'
+//apply from: 'utils.gradle'
+apply from: '../config/quality.gradle'
 
 android {
     compileSdkVersion 28
