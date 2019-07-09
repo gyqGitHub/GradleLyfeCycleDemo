@@ -1,0 +1,477 @@
+<?xml version="1.0"?><!--
+  ~ Copyright 2015 Vincent Brison.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  --><!--
+==Checkstyle配置，用于检查编码约定
+==Checkstyle非常易于配置。请务必阅读文档http://checkstyle.sf.net(需要翻墙)
+==要完全禁用检查，只需将其注释掉或从文件中删除它
+--><!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.1//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_1.dtd">
+<!--英文规则配置：http://checkstyle.sourceforge.net/config_filters.html-->
+<!--中文规则说明：https://www.cnblogs.com/ziyuyuyu/p/9870717.html -->
+<module name="Checker">
+    <!--检查文件行数，默认2000-->
+    <module name="FileLength">
+        <property name="max" value="1000" />
+        <property name="fileExtensions" value="" />
+    </module>
+    <!--配置扫描范围的文件路径-->
+    <module name="SuppressionFilter">
+        <property name="file" value="${checkstyleSuppressionsPath}" />
+    </module>
+    <!--类，方法行数，代码行长度等-->
+    <module name="TreeWalker">
+
+        <!-- See http://checkstyle.sf.net/config_sizes.html !-->
+        <!-- 检查代码行长度，默认80 !-->
+        <module name="LineLength">
+            <property name="ignorePattern" value="^$" />
+            <property name="max" value="120" />
+        </module>
+
+        <!-- Checks the number of methods declared in each type. This includes the number of each scope !-->
+        <!-- (private, package, protected and public) as well as an overall total. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#MethodCount !-->
+        <!--检查每个类中声明的方法数，包括重写的方法数-->
+        <module name="MethodCount">
+            <property name="maxTotal" value="100" />
+            <property name="maxPrivate" value="100" />
+            <property name="maxPackage" value="100" />
+            <property name="maxProtected" value="100" />
+            <property name="maxPublic" value="100" />
+        </module>
+
+        <!-- 检查方法和构造方法的代码行数 !-->
+        <!-- See http://checkstyle.sf.net/config_sizes.html !-->
+        <module name="MethodLength">
+            <property name="max" value="80" />
+            <property name="countEmpty" value="true" />
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF" />
+        </module>
+
+        <!-- Checks for the number of types declared at the outer (or root) level in a file. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#OuterTypeNumber !-->
+        <!--检查一个文件中外部类个数-->
+        <module name="OuterTypeNumber">
+            <property name="max" value="1" />
+        </module>
+
+        <!-- Checks the number of parameters of a method or constructor. !-->
+        <!-- See http://checkstyle.sf.net/config_sizes.html !-->
+        <!--检查方法(包括构造函数)参数个数，默认为7-->
+        <module name="ParameterNumber">
+            <property name="max" value="7" />
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF" />
+        </module>
+
+    </module>
+    <!--空格相关-->
+    <module name="TreeWalker">
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--for循环初始化语句为空时，不能有空格-->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="nospace" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--for循环中的迭代为空时是否可以为空格for (; iterator.hasNext(); )将报错-->
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="nospace" />
+        </module>
+
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#GenericWhitespace !-->
+        <!--检查范型标记< >的周围的空格是否遵守标准规约。这项规约是不可配置的-->
+        <module name="GenericWhitespace" />
+
+        <!-- Checks the padding between the identifier of a method definition, !-->
+        <!-- constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. !-->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--方法的左右括号之前是否有空格-->
+        <module name="MethodParamPad">
+            <property name="allowLineBreaks" value="false" />
+            <property name="option" value="nospace" />
+            <property name="tokens"
+                value="CTOR_DEF, LITERAL_NEW, METHOD_CALL, METHOD_DEF, SUPER_CTOR_CALL " />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--指定tokens之后没有空格-->
+        <module name="NoWhitespaceAfter">
+            <property name="allowLineBreaks" value="true" />
+            <property name="tokens"
+                value="ARRAY_INIT, BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--指定tokens之前没有空格-->
+        <module name="NoWhitespaceBefore">
+            <property name="allowLineBreaks" value="false" />
+            <property name="tokens" value="SEMI, POST_DEC, POST_INC" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--nl表示运算符必须在新行中，eol表示运算符必须在当前行的行末-->
+        <module name="OperatorWrap">
+            <property name="option" value="nl" />
+            <property name="tokens" value="ASSIGN, BAND, BOR, BSR, BXOR, COLON, DIV,
+                                           EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF,
+                                           LOR, LT, MINUS, MOD, NOT_EQUAL,
+                                           PLUS, QUESTION, SL, SR, STAR" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--左圆括号之后和右圆括号之前是否需要有一个空格-->
+        <module name="ParenPad">
+            <property name="option" value="nospace" />
+            <property name="tokens"
+                value="CTOR_CALL, METHOD_CALL,SUPER_CTOR_CALL" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--检查类型转换的圆括号的填充符策略。也就是，在左圆括号之后和右圆括号之前是否需要有一个空格-->
+        <module name="TypecastParenPad">
+            <property name="option" value="nospace" />
+            <property name="tokens" value="TYPECAST, RPAREN" />
+        </module>
+
+        <!-- Checks that a token is followed by whitespace. !-->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--指定tokens后面应有空格 COMMA逗号-->
+        <module name="WhitespaceAfter">
+            <property name="tokens" value="COMMA, SEMI, TYPECAST" />
+        </module>
+
+        <!-- Checks that a token is surrounded by whitespace. !-->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html !-->
+        <!--指定tokens周围有空格-->
+        <module name="WhitespaceAround">
+            <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN,
+                                           BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND,
+                                           LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE,
+                                           LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN,
+                                           LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT,
+                                           MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN,
+                                           QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN" />
+            <property name="allowEmptyConstructors" value="false" />
+            <property name="allowEmptyMethods" value="false" />
+        </module>
+
+        <!-- The following checks are actually not whitespace checks, but still fit here quite well. !-->
+
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#OneStatementPerLine !-->
+        <!--禁止一行多句代码-->
+        <module name="OneStatementPerLine" />
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--每行只能定义一个变量-->
+        <module name="MultipleVariableDeclarations" />
+    </module>
+
+    <!-- Checks that there are no tabs in the source file !-->
+    <!-- http://checkstyle.sourceforge.net/config_whitespace.html#FileTabCharacter !-->
+    <module name="FileTabCharacter" />
+    <!--命名相关-->
+    <module name="TreeWalker">
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#OuterTypeFilename !-->
+        <!--检查外部类是否和文件名一致-->
+        <module name="OuterTypeFilename" />
+
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ClassTypeParameterName !-->
+        <!--检查类的类型参数名称是否遵守命名规约-->
+        <module name="ClassTypeParameterName">
+            <property name="format" value="^[A-Z]$" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--常量命名-->
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
+            <property name="applyToPublic" value="true" />
+            <property name="applyToProtected" value="true" />
+            <property name="applyToPackage" value="true" />
+            <property name="applyToPrivate" value="true" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--局部final变量名称-->
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+            <property name="tokens" value="VARIABLE_DEF" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--局部变量名称-->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+            <property name="tokens" value="VARIABLE_DEF" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--成员变量的命名-->
+        <module name="MemberName">
+            <property name="format" value="^m[A-Z][a-zA-Z0-9]*$" />
+            <property name="applyToPublic" value="true" />
+            <property name="applyToProtected" value="true" />
+            <property name="applyToPackage" value="true" />
+            <property name="applyToPrivate" value="true" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--方法名命名-->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module>
+
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#MethodTypeParameterName !-->
+        <!--检查方法的类型参数名称是否遵守命名规约-->
+        <module name="MethodTypeParameterName">
+            <property name="format" value="^[A-Z]$" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--检查包名-->
+        <module name="PackageName">
+            <property name="format" value="^[a-z][a-z0-9]*(\.[a-zA-Z_][a-zA-Z0-9_]*)*$" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--参数名称-->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module>
+
+        <!-- Checks for static variable name naming conventions. !-->
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--静态变量名称-->
+        <module name="StaticVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+            <property name="applyToPublic" value="true" />
+            <property name="applyToProtected" value="true" />
+            <property name="applyToPackage" value="true" />
+            <property name="applyToPrivate" value="true" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_naming.html !-->
+        <!--检查类名-->
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF" />
+            <property name="applyToPublic" value="true" />
+            <property name="applyToProtected" value="true" />
+            <property name="applyToPackage" value="true" />
+            <property name="applyToPrivate" value="true" />
+        </module>
+
+    </module>
+    <!--注释相关-->
+    <module name="TreeWalker">
+
+        <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocStyle !-->
+        <!--注释风格检查-->
+        <module name="JavadocStyle">
+            <property name="scope" value="private" />
+            <!--
+            <property name="excludeScope"        value=""/>
+            !-->
+            <property name="checkFirstSentence" value="false" />
+            <property name="endOfSentenceFormat" value="([.?!][ \t\n\r\f&lt;])|([.?!]$)" />
+            <property name="checkEmptyJavadoc" value="false" />
+            <property name="checkHtml" value="true" />
+            <property name="tokens"
+                value="INTERFACE_DEF, CLASS_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocType !-->
+        <!--类或接口的注释-->
+        <module name="JavadocType">
+            <property name="scope" value="package" />
+            <!--
+            <property name="excludeScope"          value=""/>
+            !-->
+            <!--<property name="authorFormat"          value=""/>!-->
+            <!--<property name="versionFormat"         value=""/>!-->
+            <property name="allowMissingParamTags" value="false" />
+            <property name="allowUnknownTags" value="false" />
+            <property name="tokens" value="INTERFACE_DEF, CLASS_DEF" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocMethod !-->
+        <!--方法注释-->
+        <module name="JavadocMethod">
+            <property name="scope" value="package" />
+            <!--
+            <property name="excludeScope"                 value=""/>
+            !-->
+            <property name="allowUndeclaredRTE" value="false" />
+            <property name="allowThrowsTagsForSubclasses" value="false" />
+            <property name="allowMissingParamTags" value="false" />
+            <property name="allowMissingThrowsTags" value="false" />
+            <property name="allowMissingReturnTag" value="false" />
+            <property name="allowMissingJavadoc" value="false" />
+            <property name="allowMissingPropertyJavadoc" value="true" />
+            <property name="logLoadErrors" value="true" />
+            <property name="suppressLoadErrors" value="false" />
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF" />
+        </module>
+
+        <!-- Checks that variables have Javadoc comments. !-->
+        <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocVariable !-->
+        <!--变量注释-->
+        <module name="JavadocVariable">
+            <property name="scope" value="public" /><!--扫描范围，public修复的变量-->
+            <!--
+            <property name="excludeScope" value=""/>
+            !-->
+        </module>
+
+    </module>
+    <!--包声明相关-->
+    <module name="TreeWalker">
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--确保一个类具有一个包声明-->
+        <module name="PackageDeclaration">
+        </module>
+
+    </module>
+    <!--可见性相关-->
+    <module name="TreeWalker">
+        <!-- See http://checkstyle.sf.net/config_design.html !-->
+        <!--检查成员变量的可见性-->
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="false" />
+            <property name="protectedAllowed" value="true" />
+            <property name="publicMemberPattern" value="^serialVersionUID$" />
+        </module>
+
+        <!-- Checks that classes (except abtract one) define a ctor and don't rely on the default one. !-->
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--<module name="MissingCtor"/>!-->
+
+        <!-- Make sure that utility classes (classes that contain only static methods) do not have a public constructor. !-->
+        <!-- See http://checkstyle.sf.net/config_design.html !-->
+        <!--隐藏工具类构造器-->
+        <module name="HideUtilityClassConstructor" />
+
+    </module>
+    <!--其他-->
+    <module name="TreeWalker">
+
+        <!-- Checks that the order of modifiers conforms to the suggestions in the Java Language specification, !-->
+        <!-- sections 8.1.1, 8.3.1 and 8.4.3. !-->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html !-->
+        <!--检查修饰符顺序-->
+        <module name="ModifierOrder" />
+
+        <!-- Checks that there are no redundant modifiers. !-->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html
+        <module name="RedundantModifier">
+            <property name="tokens" value="METHOD_DEF, VARIABLE_DEF, ANNOTATION_FIELD_DEF"/>
+        </module>
+         !-->
+
+        <!-- See http://checkstyle.sf.net/config_design.html !-->
+        <!--检查只有私有构造器的类是否被声明为final-->
+        <module name="FinalClass" />
+
+        <!-- Check nested (internal) classes/interfaces are declared at the bottom of the class after all method and field declarations. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#InnerTypeLast !-->
+        <!--检查内部类是否被定义在类的最底部-->
+        <module name="InnerTypeLast" />
+
+        <!-- See http://checkstyle.sf.net/config_design.html !-->
+        <!--检查接口是否只定义了变量而没有定义方法，因为接口应该用来描述一个类型，所以只定义变量而不定义方法是不恰当的-->
+        <module name="InterfaceIsType">
+            <property name="allowMarkerInterfaces" value="true" />
+        </module>
+
+        <!-- Restricts throws statements to a specified count. !-->
+        <!-- See http://checkstyle.sf.net/config_design.html !-->
+        <!--将异常抛出语句的数量配置为一个指定的限值（默认值为1）-->
+        <module name="ThrowsCount">
+            <property name="max" value="2" />
+        </module>
+
+        <!-- Checks that classes that define a covariant equals() method also override method equals(java.lang.Object). !-->
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--检查定义了共变equals()方法的类中是否同样覆盖了equals(java.lang.Object)方法-->
+        <module name="CovariantEquals" />
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--根据Java编程语言的编码规约，一个类或接口的声明部分应当按照以下顺序出现：
+　　　　    1. 类（静态）变量。首先应当是public类变量，然后是protected类变量，然后是package类变量（没有访问标识符），最后是private类变量。
+　　　　    2. 实例变量。首先应当是public类变量，然后是protected类变量，然后是package类变量（没有访问标识符），最后是private类变量。
+　　　　    3. 构造器
+　　　　    4. 方法-->
+        <module name="DeclarationOrder">
+            <property name="ignoreConstructors" value="false" />
+            <property name="ignoreModifiers" value="false" />
+        </module>
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--检查switch语句中的default是否在所有的case分支之后。-->
+        <module name="DefaultComesLast" />
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--检测代码中是否有空语句（也就是单独的;符号）。-->
+        <module name="EmptyStatement" />
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--从不允许捕捉java.lang.Exception、java.lang.Error、java.lang.RuntimeException的行为-->
+        <module name="IllegalCatch">
+            <property name="illegalClassNames"
+                value="java.lang.Throwable, java.lang.RuntimeException" />
+        </module>
+
+        <!-- This check can be used to ensure that types are not declared to be thrown. !-->
+        <!-- Declaring to throw java.lang.Error or java.lang.RuntimeException is almost never acceptable. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#IllegalThrows !-->
+        <!--这项检查可以用来确保类型不能声明抛出指定的异常类型。从不允许声明抛出java.lang.Error或java.lang.RuntimeException。-->
+        <module name="IllegalThrows">
+            <property name="illegalClassNames"
+                value="java.lang.Throwable, java.lang.Error, java.lang.RuntimeException" />
+        </module>
+
+        <!-- Checks for assignments in subexpressions, such as in String s = Integer.toString(i = 2);. !-->
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--检查子表达式中是否有赋值语句，例如String s = Integer.toString(i = 2);-->
+        <module name="InnerAssignment">
+            <property name="tokens" value="ASSIGN, BAND_ASSIGN, BOR_ASSIGN, BSR_ASSIGN, BXOR_ASSIGN,
+                                           DIV_ASSIGN, MINUS_ASSIGN, MOD_ASSIGN, PLUS_ASSIGN, SL_ASSIGN,
+                                           SR_ASSIGN, STAR_ASSIGN" />
+        </module>
+
+        <!-- Checks that switch statement has "default" clause. !-->
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--检查switch语句是否含有default子句-->
+        <module name="MissingSwitchDefault" />
+
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#ModifiedControlVariable !-->
+        <!--检查循环控制变量是否被修改-->
+        <module name="ModifiedControlVariable" />
+
+        <!-- See http://checkstyle.sf.net/config_coding.html !-->
+        <!--不允许对参数进行赋值-->
+        <module name="ParameterAssignment" />
+
+        <!-- See http://checkstyle.sf.net/config_import.html !-->
+        <!--未使用的引入声明-->
+        <module name="UnusedImports" />
+
+    </module>
+
+
+</module>
