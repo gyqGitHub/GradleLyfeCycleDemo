@@ -3,7 +3,7 @@ gradle.buildStarted {
     logger.quiet "***************************************************${gradle}：开始构建啦！！！"
 }
 //根据include 方法传的值确定要构建的项目(除了rootProject)有哪些
-include ':app', ':base', ':javaLib', ':business'
+include ':app'//, ':base', ':javaLib', ':business'
 logger.quiet "1=========最先执行的文件setting.gradle"
 
 //监听settings.gradle中代码执行完
@@ -28,9 +28,12 @@ gradle.taskGraph.whenReady {
 }
 
 gradle.taskGraph.beforeTask {
-    logger.quiet "==========${it.project}-->${it.name}执行前的回调"
+    if(it.name.contains('Classpath')){
+          logger.quiet "==========${it.project}-->${it.name}执行前的回调"
+    }
 }
 
+/*
 gradle.taskGraph.afterTask {
     logger.quiet "==========${it.project}-->${it.name}执行后的回调"
-}
+}*/
