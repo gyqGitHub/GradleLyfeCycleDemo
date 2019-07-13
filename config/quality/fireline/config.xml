@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fireline>
+    <args>
+        <!-- 选择扫描哪些类别的规则
+        1：代码规范类
+        2：内存类
+        3：日志类
+        4：安全类
+        5：空指针
+        6：多线程
+      -->
+        <scanTypes>1+2+4+5+6</scanTypes>
+        <!--过滤掉单条规则，请加QQ群298228528获取规则名称-->
+        <filterRules>
+            <!--<filterRule ruleName="LogOnOffRule" />
+            <filterRule ruleName="LogBlockRule" />
+            <filterRule ruleName="LogAssignmentRule" />-->
+        </filterRules>
+        <!--过滤掉你不想检查的文件（注意：重复代码检查不支持过滤）-->
+        <filterFiles>
+            <!--过滤单个文件-->
+            <filterFile Name="R.java"/>
+            <!--过滤整个文件夹-->
+            <filterFile Name="/app/build/"/>
+            <filterFile Name="/javaLib/"/>
+            <filterFile Name="/base/"/>
+            <filterFile Name="/business/"/>
+            <filterFile Name="R.java"/>
+        </filterFiles>
+    </args>
+</fireline>
