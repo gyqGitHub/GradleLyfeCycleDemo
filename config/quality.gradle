@@ -23,7 +23,6 @@ check.dependsOn 'checkstyle'//, 'findbugs', 'pmd', 'lint'
 
 def configDir = "${project.rootDir}/config/quality"
 def reportsDir = "${project.buildDir}/reports"
-
 checkstyle {
     toolVersion "8.17"
 }
@@ -80,7 +79,19 @@ def filterCommitter(String gitstatusinfo) {
     return filterList
 }
 
-
+task runFireline(type:Exec) {
+//    if (project.hasProperty('checkCommit') && project.property("checkCommit")) {
+        commandLine 'cmd' , '/c' , "java -jar D:/fireline.jar -s=${project.rootDir} -r=D:/report config=$configDir/fireline/config.xml reportFileName=fireline"
+//    }
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+    println standardOutput
+    doLast {
+        logger.quiet "${execResult.exitValue}"
+    }
+}
 
 
 task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
